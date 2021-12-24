@@ -1,21 +1,12 @@
 import React from 'react'
-import { View, Text, Card, Button } from 'react-native-ui-lib'
-import Auth0 from 'react-native-auth0'
+import { View, Text, Button } from 'react-native-ui-lib'
+import { useAuthenticationContext } from '../../../providers/authentication'
 
-const auth0 = new Auth0({
-  domain: 'pokermind-local.us.auth0.com',
-  clientId: 'wONWFkLFUipVDErBZjPSiWqqPj6oKfuf',
-})
 export const AuthScreen = () => {
-  const auth = async () => {
-    try {
-      const response = await auth0.webAuth.authorize({
-        scope: 'openid profile email',
-      })
-      console.log(response)
-    } catch (error) {
-      console.error(error)
-    }
+  const { performWebAuth } = useAuthenticationContext()
+
+  const handleLogin = () => {
+    performWebAuth()
   }
   return (
     <View flex useSafeArea>
@@ -23,11 +14,19 @@ export const AuthScreen = () => {
         <Text text40L marginB-s4>
           Auth
         </Text>
-        <Card center padding-card marginB-s4 enableShadow={false}>
-          <Text body>This is an example card </Text>
-        </Card>
 
-        <Button label="Button" borderRadius={0} onPress={auth} />
+        <Text text50L marginB-s4>
+          Sign in with our identity provider
+        </Text>
+        {/* <Card center padding-card marginB-s4 enableShadow={false}>
+          <Text body>This is an example card </Text>
+        </Card> */}
+
+        <Button
+          label="Login With Auth0"
+          borderRadius={0}
+          onPress={handleLogin}
+        />
       </View>
     </View>
   )

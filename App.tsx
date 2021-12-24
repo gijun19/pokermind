@@ -1,16 +1,28 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { NavigationContainer } from '@react-navigation/native'
 import { AuthStack, RootNavigator } from './src/core/navigators'
 import { StatusBar } from 'react-native'
+import {
+  AuthenticationProvider,
+  useAuthenticationContext,
+} from './src/providers/authentication'
+
+const AppNavigator = () => {
+  const { accessToken } = useAuthenticationContext()
+  return (
+    <NavigationContainer>
+      {accessToken ? <RootNavigator /> : <AuthStack />}
+    </NavigationContainer>
+  )
+}
 
 export default function App() {
-  const [isAuthenticated] = useState(false)
   return (
     <>
       <StatusBar />
-      <NavigationContainer>
-        {isAuthenticated ? <RootNavigator /> : <AuthStack />}
-      </NavigationContainer>
+      <AuthenticationProvider>
+        <AppNavigator />
+      </AuthenticationProvider>
     </>
   )
 }
