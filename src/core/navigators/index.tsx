@@ -2,9 +2,10 @@ import React from 'react'
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 import { AuthScreen } from '../../modules/auth/screens'
 import { genRootNavigator, genStackNavigator, genTabNavigator } from './helpers'
-import { Platform, Text, View } from 'react-native'
+import { Platform } from 'react-native'
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs'
 import { ScreenLayout, TabScreenLayout } from './types'
+import { Colors, Icon, Assets, View } from 'react-native-ui-lib'
 
 export const screenDefaultOptions = (): NativeStackNavigationOptions => ({
   headerShadowVisible: false,
@@ -26,22 +27,26 @@ export const screenDefaultOptions = (): NativeStackNavigationOptions => ({
 export const tabBarDefaultOptions = (
   routeName: string,
 ): BottomTabNavigationOptions => ({
-  headerShown: false,
-  tabBarActiveTintColor: 'red',
-  tabBarInactiveTintColor: 'red',
-  tabBarStyle: {
-    backgroundColor: 'red',
-    borderTopWidth: 0,
-    elevation: 0,
-  },
-  tabBarIcon: ({ focused, color, size }) => (
-    <View>
-      <Text>
-        `${focused} ${color} ${size} ${routeName}`
-      </Text>
-    </View>
-    // <Icon name={getIconName(routeName, focused)} size={size} color={color} />
-  ),
+  tabBarShowLabel: false,
+  tabBarIconStyle: { display: 'none' },
+  // headerShown: false,
+  // tabBarActiveTintColor: Colors.white,
+  // tabBarInactiveTintColor: Colors.white,
+  // tabBarStyle: {
+  //   backgroundColor: Colors.white,
+  //   borderTopWidth: 0,
+  //   elevation: 0,
+  // },
+  // tabBarIcon: ({ focused, color, size }) => (
+  //   <View center>
+  //     <Icon
+  //       margin-30
+  //       size={size}
+  //       tintColor={Colors.purple10}
+  //       source={Assets.icons.search}
+  //     />
+  //   </View>
+  // ),
 })
 
 // const getIconName = (

@@ -1,7 +1,8 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs'
 import { createNativeStackNavigator } from '@react-navigation/native-stack'
 import React from 'react'
-import { View } from 'react-native'
+import { StyleSheet, View } from 'react-native'
+import { Colors } from 'react-native-ui-lib'
 import { ScreenInfo, TabScreenInfo } from '../types'
 
 export const genStackNavigator = (screens: ScreenInfo[]) => {
@@ -35,7 +36,23 @@ export const genTabNavigator = (screens: TabScreenInfo[]) => {
       />
     )
   })
-  return <Tab.Navigator>{tabScreens}</Tab.Navigator>
+  return (
+    <Tab.Navigator
+      screenOptions={{
+        tabBarStyle: {
+          position: 'absolute',
+          bottom: 25,
+          left: 20,
+          right: 20,
+          backgroundColor: Colors.white,
+          borderRadius: 12,
+          height: 70,
+          ...styles.shadow,
+        },
+      }}>
+      {tabScreens}
+    </Tab.Navigator>
+  )
 }
 
 export const genRootNavigator = (
@@ -55,3 +72,16 @@ export const genRootNavigator = (
     </RootStack.Navigator>
   )
 }
+
+const styles = StyleSheet.create({
+  shadow: {
+    shadowColor: Colors.grey10,
+    shadowOffset: {
+      width: 0,
+      height: 2,
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 1.5,
+    elevation: 5,
+  },
+})
