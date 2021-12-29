@@ -42,11 +42,10 @@ export const genTabNavigator = (screens: TabScreenInfo[]) => {
         tabBarStyle: {
           position: 'absolute',
           bottom: 25,
-          left: 20,
-          right: 20,
+          marginHorizontal: 18,
           backgroundColor: Colors.white,
           borderRadius: 12,
-          height: 70,
+          height: 60,
           ...styles.shadow,
         },
       }}>

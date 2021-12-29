@@ -2,7 +2,7 @@ import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs'
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 import React from 'react'
 
-export type Tab = 'Profile' | 'Feed' | 'Chat'
+export type Tab = 'PokerSession' | 'Feed' | 'Chat' | 'Profile'
 export type Screen = 'Auth'
 export type Modal = 'Example'
 

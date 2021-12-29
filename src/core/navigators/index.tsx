@@ -2,10 +2,11 @@ import React from 'react'
 import { NativeStackNavigationOptions } from '@react-navigation/native-stack'
 import { AuthScreen } from '../../modules/auth/screens'
 import { genRootNavigator, genStackNavigator, genTabNavigator } from './helpers'
-import { Platform } from 'react-native'
+import { Platform, StyleSheet } from 'react-native'
 import { BottomTabNavigationOptions } from '@react-navigation/bottom-tabs'
 import { ScreenLayout, TabScreenLayout } from './types'
-import { Colors, Icon, Assets, View } from 'react-native-ui-lib'
+import { View, Colors } from 'react-native-ui-lib'
+import MCIIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 
 export const screenDefaultOptions = (): NativeStackNavigationOptions => ({
   headerShadowVisible: false,
@@ -28,43 +29,38 @@ export const tabBarDefaultOptions = (
   routeName: string,
 ): BottomTabNavigationOptions => ({
   tabBarShowLabel: false,
-  tabBarIconStyle: { display: 'none' },
-  // headerShown: false,
-  // tabBarActiveTintColor: Colors.white,
-  // tabBarInactiveTintColor: Colors.white,
-  // tabBarStyle: {
-  //   backgroundColor: Colors.white,
-  //   borderTopWidth: 0,
-  //   elevation: 0,
-  // },
-  // tabBarIcon: ({ focused, color, size }) => (
-  //   <View center>
-  //     <Icon
-  //       margin-30
-  //       size={size}
-  //       tintColor={Colors.purple10}
-  //       source={Assets.icons.search}
-  //     />
-  //   </View>
-  // ),
+  tabBarIcon: ({ focused }) => {
+    return (
+      <View style={styles.iconContainer}>
+        <MCIIcon
+          name={getIconName(routeName)}
+          style={{ color: focused ? Colors.pmBrand : Colors.grey10 }}
+          size={30}
+        />
+      </View>
+    )
+  },
 })
 
-// const getIconName = (
-//   routeName: string,
-//   focused: boolean
-// ): keyof typeof Ionicons.glyphMap => {
-//   if (routeName === 'MainNavigator') {
-//     return focused ? 'newspaper' : 'newspaper-outline'
-//   }
-//   if (routeName === 'ExampleNavigator') {
-//     return focused ? 'construct' : 'construct-outline'
-//   }
-//   if (routeName === 'SettingsNavigator') {
-//     return focused ? 'cog' : 'cog-outline'
-//   }
-
-//   return 'list'
-// }
+const getIconName = (routeName: string) => {
+  switch (routeName) {
+    case 'ProfileNavigator': {
+      return 'account-outline'
+    }
+    case 'FeedNavigator': {
+      return 'timeline-outline'
+    }
+    case 'ChatNavigator': {
+      return 'chat-outline'
+    }
+    case 'PokerSessionNavigator': {
+      return 'cards-playing-outline'
+    }
+    default: {
+      return ''
+    }
+  }
+}
 
 const screens: ScreenLayout = {
   Auth: {
@@ -80,12 +76,12 @@ const screens: ScreenLayout = {
 export const AuthStack = () => genStackNavigator([screens.Auth])
 
 const tabs: TabScreenLayout = {
-  Profile: {
+  PokerSession: {
     component: View, // should be a stack nav
-    name: 'ProfileNavigator',
+    name: 'PokerSession',
     options: () => ({
-      title: 'Profile',
-      ...tabBarDefaultOptions('ProfileNavigator'),
+      title: 'Poker Session',
+      ...tabBarDefaultOptions('PokerSessionNavigator'),
     }),
   },
   Feed: {
@@ -104,9 +100,25 @@ const tabs: TabScreenLayout = {
       ...tabBarDefaultOptions('ChatNavigator'),
     }),
   },
+  Profile: {
+    component: View, // should be a stack nav
+    name: 'ProfileNavigator',
+    options: () => ({
+      title: 'Profile',
+      ...tabBarDefaultOptions('ProfileNavigator'),
+    }),
+  },
 }
 
+const styles = StyleSheet.create({
+  iconContainer: {
+    position: 'absolute',
+    top: '50%',
+    height: 30,
+  },
+})
+
 export const TabNavigator = () =>
-  genTabNavigator([tabs.Profile, tabs.Chat, tabs.Feed])
+  genTabNavigator([tabs.PokerSession, tabs.Feed, tabs.Chat, tabs.Profile])
 
 export const RootNavigator = () => genRootNavigator(TabNavigator, [])
